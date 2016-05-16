@@ -78,7 +78,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			a.headers={pass:app.password};
 			a.body=item_id;
 			a.generateRequest();
-			this.$.toastSuccess.open();
 		},
 		doResponse: function(e){
 			this.items=this.$.ajaxitems.lastResponse;
@@ -90,6 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		},
 		onBuySuccess: function(e){
 			this.$.toastSuccess.open();
+			this.fire('change')
 		},
 		onBuyFail: function(e){
 			this.$.toastFail.open();

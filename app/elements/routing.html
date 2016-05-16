@@ -64,6 +64,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       setFocus(app.route);
     });
 
+    page('/detail', function() {
+      app.route = checkLogin()||'detail';
+      setFocus(app.route);
+    });
+
     page('/admin', function() {
       app.route = checkLogin()||'admin';
       setFocus(app.route);

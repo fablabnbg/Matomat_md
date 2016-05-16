@@ -51,6 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		},
 		doResponse: function(e){
 			this.$.spinner.active=false;
+			this.balance=this.$.ajax.lastResponse/100+"€";
 			this.fire('login',{username:this.username,password:this.password});
 		},
 		doError: function(e){
@@ -65,6 +66,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true,
           },
           password: {
+            type: String,
+            value: '',
+            notify: true,
+          },
+          balance: {
             type: String,
             value: '',
             notify: true,

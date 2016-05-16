@@ -81,11 +81,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.logged_in=false;
   app.username="";
   app.password="";
+  app.balance="";
   app.doLogin = function(e) {
 	  app.logged_in=true;
 	  app.set('username',e.detail.username);
 	  app.set('password',e.detail.password);
-	  app.route='home';
+	  if (app.route==="login"){
+		  app.route='home';
+	  }
+	  let l=document.querySelector('my-login');
+	  app.balance=l.balance;
   };
+  app.logout =function(){
+	  let l=document.querySelector('my-login');
+	  l.password="";
+	  app.logged_in=false;
+	  app.set('username','');
+	  app.set('password','');
+	  app.balance="";
+	  app.route='login';
+  };
+
+  app.refreshBalance=function(){
+	  let l=document.querySelector('my-login');
+	  l.doLogin();
+  }
+
+  app.undo=function(){
+	  app.$.ajaxundo.generateRequest();
+  }
+  app.onUndoSuccess=function(){
+	  app.$.toast.text="Letzte Aktion Rückgängig gemacht";
+	  app.$.toast.open();
+	  app.refreshBalance();
+  }
+  app.onUndoFail=function(){
+	  app.$.toast.text="Letzte Aktion konnte nicht Rückgängig gemacht werden";
+	  app.$.toast.open();
+  }
 
 })(document);
