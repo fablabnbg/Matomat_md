@@ -79,8 +79,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   app.logged_in=false;
-  app.doLogin = function() {
+  app.username="";
+  app.password="";
+  app.doLogin = function(e) {
 	  app.logged_in=true;
+	  app.set('username',e.detail.username);
+	  app.set('password',e.detail.password);
 	  app.route='home';
   };
 

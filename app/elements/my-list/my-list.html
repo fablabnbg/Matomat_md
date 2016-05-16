@@ -17,17 +17,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+	  #toastSuccess{
+		  --paper-toast-background-color:green;
+	  }
+	  #toastFail{
+		  --paper-toast-background-color:red;
+	  }
 
       span {
         @apply(--paper-font-body1);
       }
     </style>
+	<iron-ajax auto id="ajaxitems"
+		       url="https://matom.at/api/items"
+		       on-response="doResponse"
+		       on-error="doError"
+			   handle-as="json"></iron-ajax>
+	<iron-ajax id="ajaxbuy"
+	           url="https://matom.at/api/{{app.username}}/buy"
+	           content-type="application/json"
+	           headers$='{"pass":"[[app.password]]"}'
+	           method="POST"
+	           on-response="onBuySuccess"
+	           on-error="onBuyFail">
+	</iron-ajax>
 
-    <ul>
+   <paper-toast id="toastFail" text="Kauf fehlgeschlagen"></paper-toast>
+   <paper-toast id="toastSuccess" text="Kauf erfolgreich"></paper-toast>
+
+    <div role="listbox">
       <template is="dom-repeat" items="{{items}}">
-        <li><span>{{item}}</span></li>
+		  <paper-item on-tap="doBuy" data-itemid$="{{item.id}}">
+			  <paper-item-body two-line>
+				  <div>{{item.name}}</div>
+				  <div secondary>{{item.price}}</div>
+			  </paper-item-body>
+		  </paper-item>
       </template>
-    </ul>
+    </div>
   </template>
 
   <script>
@@ -43,17 +70,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true
           }
         },
+		doBuy: function(e){
+			let a=this.$.ajaxbuy;
+			let item_id=e.currentTarget.dataset['itemid'];
+			//This should be in the bindings of the declaration
+			a.url="https://matom.at/api/"+app.username+"/buy";
+			a.headers={pass:app.password};
+			a.body=item_id;
+			a.generateRequest();
+			this.$.toastSuccess.open();
+		},
+		doResponse: function(e){
+			this.items=this.$.ajaxitems.lastResponse;
+			for(let item of this.items){
+				item.price=item.price/100+"€";
+			}
+		},
+		doError: function(e){
+		},
+		onBuySuccess: function(e){
+			this.$.toastSuccess.open();
+		},
+		onBuyFail: function(e){
+			this.$.toastFail.open();
+		},
 
-        ready: function() {
-          this.items = [
-            'Responsive Web App boilerplate',
-            'Iron Elements and Paper Elements',
-            'End-to-end Build Tooling (including Vulcanize)',
-            'Unit testing with Web Component Tester',
-            'Routing with Page.js',
-            'Offline support with the Platinum Service Worker Elements'
-          ];
-        }
       });
     })();
   </script>

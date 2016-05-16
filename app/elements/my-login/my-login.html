@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<paper-spinner id="spinner"></paper-spinner></div>
 	<iron-ajax id="ajax"
 		       url="https://matom.at/api/{{username}}/balance"
+		       headers$='{"pass":"[[password]]"}'
 		       on-response="doResponse"
 		       on-error="doError"
 			   handle-as="json"></iron-ajax>
@@ -45,13 +46,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 		doLogin: function(e){
 			let a=this.$.ajax;
-			a.headers={pass:this.password};
 			this.$.spinner.active=true;
 			a.generateRequest();
 		},
 		doResponse: function(e){
 			this.$.spinner.active=false;
-			this.fire('login');
+			this.fire('login',{username:this.username,password:this.password});
 		},
 		doError: function(e){
 			this.$.spinner.active=false;
