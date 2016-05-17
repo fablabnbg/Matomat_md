@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					           label="Empfänger"></paper-input>
 				  <paper-input value="{{amount}}"
 					           label="Betrag"
-							   auto-validate allowed-pattern="[0-9.]"></paper-input>
+				auto-validate allowed-pattern="[0-9.]"><div suffix>€</div></paper-input>
 				  <paper-button on-tap="doTransfer">Ok</paper-button>
   </template>
 

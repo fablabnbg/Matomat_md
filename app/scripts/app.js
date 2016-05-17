@@ -94,7 +94,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
   app.logout =function(){
 	  let l=document.querySelector('my-login');
-	  l.password="";
+	  l.logout();
 	  app.logged_in=false;
 	  app.set('username','');
 	  app.set('password','');

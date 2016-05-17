@@ -26,13 +26,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 	<div><paper-input id="username-input" value="{{username::input}}" label="Username"></div>
 	<div><paper-input id="password-input" value="{{password::input}}" label="Password" type="password"></div>
-	<div><paper-button id="login-button" on-tap="doLogin">Login</paper-button>
+	<div><paper-checkbox id="remember">Angemeldet bleiben</paper-checkbox></div>
+	<div><paper-button id="login-button" on-tap="doLogin">Login</paper-button></div>
 	<iron-ajax id="ajax"
 		       url="https://matom.at/api/{{username}}/balance"
 		       headers$='{"pass":"[[password]]"}'
 		       on-response="doResponse"
 		       on-error="doError"
 			   handle-as="json"></iron-ajax>
+	<iron-localstorage id="storage"
+	                   name="credentials"
+	                   value="{{credentials}}"
+	                   autoSaveDisabled
+	                   on-iron-localstorage-load="onStorageLoad">
   </template>
 
   <script>
@@ -48,13 +54,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			a.generateRequest();
 		},
 		doResponse: function(e){
+			if(this.$.remember.checked){
+				this.set('credentials',{username:this.username,password:this.password});
+				this.$.storage.save();
+			}
 			this.fire('notbusy');
 			this.balance=this.$.ajax.lastResponse/100+"€";
 			this.fire('login',{username:this.username,password:this.password});
 		},
 		doError: function(e){
+			this.set('credentials',null);
+			this.$.storage.save();
 			this.fire('notbusy');
 			this.fire('message',{type:'fail',text:"Login fehlgeschlagen"});
+		},
+		onStorageLoad: function(e){
+			this.set('username',this.credentials.username);
+			this.set('password',this.credentials.password);
+			this.doLogin();
+		},
+		logout: function(){
+			this.set('credentials',null);
+			this.set('password',"");
+			this.$.storage.save();
 		},
 
         properties: {
@@ -72,6 +94,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             value: '',
             notify: true,
+          },
+          credentials: {
+            type: Object,
+            value: {},
+            notify: true
           },
         }
       });

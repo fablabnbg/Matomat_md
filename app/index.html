@@ -178,16 +178,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <h1 class="page-title" tabindex="-1">Details</h1>
 				<paper-material elevation="1">
 					<my-details id="details"
-				 	            on-change="refreshBalance"
+					            on-change="refreshBalance"
 					            on-busy="spinnerStart"
 					            on-notbusy="spinnerStop"
 					            on-message="showToast"></my-details>
-              </paper-material>
+				</paper-material>
             </section>
 
             <section data-route="admin" tabindex="-1">
-                <h1 class="page-title" tabindex="-1">Contact</h1>
-                <p>This is the contact section</p>
+                <h1 class="page-title" tabindex="-1">Admin</h1>
+				<paper-material elevation="1">
+					<h2>Nutzer/Passwort</h2>
+				</paper-material>
+				<paper-material elevation="1">
+					<h2>Produkte</h2>
+				</paper-material>
             </section>
           </iron-pages>
         </div>
