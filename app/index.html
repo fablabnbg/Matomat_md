@@ -107,6 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <span class="space"></span>
 
+          <paper-spinner id="spinner"></paper-spinner></div>
           <!-- Toolbar icons -->
           <paper-icon-button icon="undo" on-tap="undo"></paper-icon-button>
           <paper-icon-button icon="exit-to-app" on-tap="logout"></paper-icon-button>
@@ -134,13 +135,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
             <section data-route="login" tabindex="-1">
               <paper-material elevation="1">
-                <my-login on-login="doLogin"></my-login>
+                <my-login on-login="doLogin"
+				          on-busy="spinnerStart"
+				          on-notbusy="spinnerStop"
+				          on-message="showToast"></my-login>
               </paper-material>
 			</section>
             <section data-route="home" tabindex="-1">
               <paper-material elevation="1">
                 <h1 class="page-title" tabindex="-1">Kaufen</h1>
-                <my-list on-change="refreshBalance"></my-list>
+                <my-list on-change="refreshBalance" on-message="showToast"></my-list>
               </paper-material>
             </section>
 
@@ -167,8 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-scroll-header-panel>
     </paper-drawer-panel>
 
-    <paper-toast id="toast">
-    </paper-toast>
+   <paper-toast id="toast"></paper-toast>
 
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
     <!--

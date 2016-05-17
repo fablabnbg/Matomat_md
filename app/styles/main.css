@@ -16,3 +16,9 @@ body {
 .page-title {
   outline: none;
 }
+.success{
+  color:green;
+}
+.fail{
+  color:red;
+}

@@ -111,13 +111,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	  app.$.ajaxundo.generateRequest();
   }
   app.onUndoSuccess=function(){
-	  app.$.toast.text="Letzte Aktion Rückgängig gemacht";
-	  app.$.toast.open();
+	  app.showToast({detail:{type:'success',text:"Letzte Aktion Rückgängig gemacht"}});
 	  app.refreshBalance();
   }
   app.onUndoFail=function(){
-	  app.$.toast.text="Letzte Aktion konnte nicht Rückgängig gemacht werden";
-	  app.$.toast.open();
+	  app.showToast({detail:{type:'success',text:"Letzte Aktion konnte nicht Rückgängig gemacht werden"}});
+  }
+  app.spinnerStart=function(){
+	  app.$.spinner.active=true;
+  }
+  app.spinnerStop=function(){
+	  app.$.spinner.active=false;
+  }
+  app.showToast=function(e){
+	  let t=app.$.toast;
+	  t.classList.remove('fail');
+	  t.classList.remove('success');
+	  t.text=e.detail.text;
+	  if (e.detail.type==="fail"){
+		  t.classList.add('fail');
+	  } else if(e.detail.type==="success"){
+		  t.classList.add('success');
+	  }
+	  t.open();
   }
 
 })(document);

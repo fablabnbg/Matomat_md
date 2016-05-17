@@ -27,14 +27,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<div><paper-input id="username-input" value="{{username::input}}" label="Username"></div>
 	<div><paper-input id="password-input" value="{{password::input}}" label="Password" type="password"></div>
 	<div><paper-button id="login-button" on-tap="doLogin">Login</paper-button>
-	<paper-spinner id="spinner"></paper-spinner></div>
 	<iron-ajax id="ajax"
 		       url="https://matom.at/api/{{username}}/balance"
 		       headers$='{"pass":"[[password]]"}'
 		       on-response="doResponse"
 		       on-error="doError"
 			   handle-as="json"></iron-ajax>
-		   <paper-toast id="toastFail" text="Login fehlgeschlagen"></paper-toast>
   </template>
 
   <script>
@@ -46,17 +44,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 		doLogin: function(e){
 			let a=this.$.ajax;
-			this.$.spinner.active=true;
+			this.fire('busy');
 			a.generateRequest();
 		},
 		doResponse: function(e){
-			this.$.spinner.active=false;
+			this.fire('notbusy');
 			this.balance=this.$.ajax.lastResponse/100+"€";
 			this.fire('login',{username:this.username,password:this.password});
 		},
 		doError: function(e){
-			this.$.spinner.active=false;
-			this.$.toastFail.open();
+			this.fire('notbusy');
+			this.fire('message',{type:'fail',text:"Login fehlgeschlagen"});
 		},
 
         properties: {

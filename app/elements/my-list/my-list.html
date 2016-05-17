@@ -17,12 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-	  #toastSuccess{
-		  --paper-toast-background-color:green;
-	  }
-	  #toastFail{
-		  --paper-toast-background-color:red;
-	  }
 
       span {
         @apply(--paper-font-body1);
@@ -41,9 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	           on-response="onBuySuccess"
 	           on-error="onBuyFail">
 	</iron-ajax>
-
-   <paper-toast id="toastFail" text="Kauf fehlgeschlagen"></paper-toast>
-   <paper-toast id="toastSuccess" text="Kauf erfolgreich"></paper-toast>
 
     <div role="listbox">
       <template is="dom-repeat" items="{{items}}">
@@ -88,11 +79,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		doError: function(e){
 		},
 		onBuySuccess: function(e){
-			this.$.toastSuccess.open();
+			this.fire('message',{type:'success',text:"Kauf erfolgreich"});
 			this.fire('change')
 		},
 		onBuyFail: function(e){
-			this.$.toastFail.open();
+			this.fire('message',{type:'fail',text:"Kauf nicht erfolgreich"});
 		},
 
       });
