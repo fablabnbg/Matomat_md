@@ -106,6 +106,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	  let l=document.querySelector('my-login');
 	  l.doLogin();
   }
+  app.refreshDetails=function(){
+	  app.$.details.refresh();
+  }
 
   app.undo=function(){
 	  app.spinnerStart();
@@ -115,6 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	  app.spinnerStop();
 	  app.showToast({detail:{type:'success',text:"Letzte Aktion Rückgängig gemacht"}});
 	  app.refreshBalance();
+	  app.refreshDetails();
   }
   app.onUndoFail=function(){
 	  app.spinnerStop();

@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 
-<dom-module id="my-pay">
+<dom-module id="my-details">
   <template>
     <style>
       :host {
@@ -22,27 +22,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--paper-font-body1);
       }
     </style>
-	<iron-ajax id="ajaxpay"
-	           url="https://matom.at/api/{{app.username}}/pay"
+	<iron-ajax id="ajax"
+	           url="https://matom.at/api/{{app.username}}/details"
 	           content-type="application/json"
 	           headers$='{"pass":"[[app.password]]"}'
-	           method="POST"
-	           on-response="onPaySuccess"
-	           on-error="onPayFail">
+	           method="Get"
+			   on-Response="onResponse"
+			   on-Error="onError">
 	</iron-ajax>
 
     <div role="listbox">
-      <template is="dom-repeat" items="{{amounts}}">
-		  <paper-item on-tap="doPayQuick" data-amount$="{{item}}">
-			  <paper-item-body>
-				  {{item}}€
+      <template is="dom-repeat" items="{{details}}">
+		  <paper-item>
+			  <paper-item-body two-line>
+				  <div>{{item.amount}} {{item.msg}}</div>
+				  <div secondary>{{item.time}}</div>
 			  </paper-item-body>
 		  </paper-item>
       </template>
-	  <paper-input value="{{customAmount}}"
-	               label="Betrag"
-	               auto-validate allowed-pattern="[0-9.]"></paper-input>
-	  <paper-button on-tap="doPayCustom">Ok</paper-button>
     </div>
   </template>
 
@@ -51,43 +48,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'my-pay',
+        is: 'my-details',
 
         properties: {
-          amounts: {
+          details: {
             type: Array,
-			value: [10,20,50],
+			value: [],
             notify: true
           },
-          customAmount: {
-            type: String,
-			value: "",
-            notify: true
-          }
         },
-		doPayCustom: function(e){
-			this.doPay(this.customAmount);
-		},
-		doPayQuick: function(e){
-			this.doPay(e.currentTarget.dataset['amount']);
-		},
-		doPay: function(amount){
+		refresh: function(){
 			this.fire('busy');
-			let a=this.$.ajaxpay;
+			let a=this.$.ajax;
 			//This should be in the bindings of the declaration
-			a.url="https://matom.at/api/"+app.username+"/pay";
+			a.url="https://matom.at/api/"+app.username+"/details";
 			a.headers={pass:app.password};
-			a.body=""+100*amount;
 			a.generateRequest();
 		},
-		onPaySuccess: function(e){
+		onResponse: function(e){
+			this.set('details',this.$.ajax.lastResponse);
+			for (let i of this.details){
+				i.amount=i.amount/100+'€';
+				if (i.Item){
+					i.msg=i.Item;
+				} else if (i.sender){
+					i.msg=i.sender+" → "+i.recipient;
+				} else {
+					i.msg="Einzahlung";
+				}
+			}
 			this.fire('notbusy');
-			this.fire('message',{type:'success',text:"Einzahlen erfolgreich"});
-			this.fire('change')
 		},
-		onPayFail: function(e){
+		onError: function(e){
 			this.fire('notbusy');
-			this.fire('message',{type:'fail',text:"Einzahlen nicht erfolgreich"});
 		},
 
       });
