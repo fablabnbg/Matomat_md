@@ -62,6 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         },
 		doBuy: function(e){
+			this.fire('busy');
 			let a=this.$.ajaxbuy;
 			let item_id=e.currentTarget.dataset['itemid'];
 			//This should be in the bindings of the declaration
@@ -79,10 +80,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		doError: function(e){
 		},
 		onBuySuccess: function(e){
+			this.fire('notbusy');
 			this.fire('message',{type:'success',text:"Kauf erfolgreich"});
 			this.fire('change')
 		},
 		onBuyFail: function(e){
+			this.fire('notbusy');
 			this.fire('message',{type:'fail',text:"Kauf nicht erfolgreich"});
 		},
 
