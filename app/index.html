@@ -142,8 +142,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 			</section>
             <section data-route="home" tabindex="-1">
-              <paper-material elevation="1">
                 <h1 class="page-title" tabindex="-1">Kaufen</h1>
+              <paper-material elevation="1">
                 <my-list on-change="refreshBalance"
 				         on-busy="spinnerStart"
 				         on-notbusy="spinnerStop"
@@ -153,11 +153,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="bank" tabindex="-1">
                 <h1 class="page-title" tabindex="-1">Bankfunktionen</h1>
-                <p>This is the users section</p>
-                <a href$="{{baseUrl}}users/Addy">Addy</a><br>
-                <a href$="{{baseUrl}}users/Rob">Rob</a><br>
-                <a href$="{{baseUrl}}users/Chuck">Chuck</a><br>
-                <a href$="{{baseUrl}}users/Sam">Sam</a>
+				<paper-material elevation="1">
+					<h2>Einzahlen</h2>
+					<my-pay on-change="refreshBalance"
+					        on-busy="spinnerStart"
+					        on-notbusy="spinnerStop"
+					        on-message="showToast"></my-pay>
+				</paper-material>
+				<paper-material elevation="1">
+					<h2>Überweisen</h2>
+					<my-transfer on-change="refreshBalance"
+					             on-busy="spinnerStart"
+					             on-notbusy="spinnerStop"
+					             on-message="showToast"></my-transfer>
+              </paper-material>
             </section>
 
             <section data-route="detail" tabindex="-1">
