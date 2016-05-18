@@ -17,8 +17,8 @@ body {
   outline: none;
 }
 .success{
-  color:green;
+  background-color:green;
 }
 .fail{
-  color:red;
+  background-color:red;
 }
