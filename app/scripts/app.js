@@ -89,11 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	  if (app.route==="login"){
 		  app.route='home';
 	  }
-	  let l=document.querySelector('my-login');
+	  var l=document.querySelector('my-login');
 	  app.balance=l.balance;
   };
   app.logout =function(){
-	  let l=document.querySelector('my-login');
+	  var l=document.querySelector('my-login');
 	  l.logout();
 	  app.logged_in=false;
 	  app.set('username','');
@@ -103,35 +103,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   app.refreshBalance=function(){
-	  let l=document.querySelector('my-login');
+	  var l=document.querySelector('my-login');
 	  l.doLogin();
-  }
+  };
   app.refreshDetails=function(){
 	  app.$.details.refresh();
-  }
+  };
 
   app.undo=function(){
 	  app.spinnerStart();
 	  app.$.ajaxundo.generateRequest();
-  }
+  };
   app.onUndoSuccess=function(){
 	  app.spinnerStop();
 	  app.showToast({detail:{type:'success',text:"Letzte Aktion Rückgängig gemacht"}});
 	  app.refreshBalance();
 	  app.refreshDetails();
-  }
+  };
   app.onUndoFail=function(){
 	  app.spinnerStop();
 	  app.showToast({detail:{type:'fail',text:"Letzte Aktion konnte nicht Rückgängig gemacht werden"}});
-  }
+  };
   app.spinnerStart=function(){
 	  app.$.spinner.active=true;
-  }
+  };
   app.spinnerStop=function(){
 	  app.$.spinner.active=false;
-  }
+  };
   app.showToast=function(e){
-	  let t=app.$.toast;
+	  var t=app.$.toast;
 	  t.classList.remove('fail');
 	  t.classList.remove('success');
 	  t.text=e.detail.text;
@@ -141,6 +141,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		  t.classList.add('success');
 	  }
 	  t.open();
-  }
+  };
 
 })(document);
