@@ -24,9 +24,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-	<div><paper-input id="username-input" value="{{username::input}}" label="Username"></div>
-	<div><paper-input id="password-input" value="{{password::input}}" label="Password" type="password"></div>
-	<div><paper-input id="password-input2" value="{{password2::input}}" label="Repeat Password" type="password"></div>
+	<div><paper-toggle-button checked="{{new_user}}">Nur Passwort ändern</paper-toggle-button></div>
+	<div><paper-input id="username-input" value="{{username::input}}" label="Username" disabled="{{new_user}}"></paper-input></div>
+	<div><paper-input id="password-input" value="{{password::input}}" label="Password" type="password"></paper-input></div>
+	<div><paper-input id="password-input2" value="{{password2::input}}" label="Repeat Password" type="password"></paper-input></div>
 	<div><paper-button on-tap="doSave">Speichern</paper-button></div>
 	<iron-ajax id="ajax"
 		       url="https://matom.at/api/{{app.username}}/user"
@@ -49,6 +50,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			if (this.password!=this.password2){
 				this.fire('message',{type:'fail',text:"Benutzerdaten konnten nicht geändert werden"});
 				return;
+			}
+			if (this.new_user){
+				this.set('username',app.username);
 			}
 			a.url="https://matom.at/api/"+app.username+"/user";
 			a.headers={pass:app.password};
@@ -80,6 +84,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           password2: {
             type: String,
             value: '',
+            notify: true,
+          },
+          new_user: {
+            type: Boolean,
+            value: true,
             notify: true,
           },
         }
