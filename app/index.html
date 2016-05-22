@@ -192,6 +192,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				</paper-material>
 				<paper-material elevation="1">
 					<h2>Produkte</h2>
+					<my-product-edit id=productedit
+					            on-busy="spinnerStart"
+					            on-notbusy="spinnerStop"
+					            on-message="showToast">
+					</my-product-edit>
 				</paper-material>
             </section>
           </iron-pages>
