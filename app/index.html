@@ -189,6 +189,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <h1 class="page-title" tabindex="-1">Admin</h1>
 				<paper-material elevation="1">
 					<h2>Nutzer/Passwort</h2>
+					<my-user-edit id=useredit
+					            on-busy="spinnerStart"
+					            on-notbusy="spinnerStop"
+					            on-message="showToast">
+					</my-user-edit>
 				</paper-material>
 				<paper-material elevation="1">
 					<h2>Produkte</h2>
