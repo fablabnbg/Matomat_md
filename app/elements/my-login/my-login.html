@@ -49,7 +49,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'my-login',
 
 		onKeydown: function(e){
-			if (e.keyIdentifier==="Enter"){
+			if (e.keyIdentifier==="Enter" ||
+			    e.key==="Enter"||
+			    e.which===13){
 				this.doLogin();
 			}
 		},
