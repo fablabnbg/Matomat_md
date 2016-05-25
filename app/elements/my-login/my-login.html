@@ -24,8 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-	<div><paper-input id="username-input" value="{{username::input}}" label="Username"></div>
-	<div><paper-input id="password-input" value="{{password::input}}" label="Password" type="password"></div>
+	<div><paper-input id="username-input" value="{{username::input}}" label="Username" on-keydown="onKeydown"></paper-input></div>
+	<div><paper-input id="password-input" value="{{password::input}}" label="Password" type="password" on-keydown="onKeydown"></paper-input></div>
 	<div><paper-checkbox id="remember">Angemeldet bleiben</paper-checkbox></div>
 	<div><paper-button id="login-button" on-tap="doLogin">Login</paper-button></div>
 	<iron-ajax id="ajax"
@@ -48,6 +48,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'my-login',
 
+		onKeydown: function(e){
+			if (e.keyIdentifier==="Enter"){
+				this.doLogin();
+			}
+		},
 		doLogin: function(e){
 			let a=this.$.ajax;
 			this.fire('busy');
