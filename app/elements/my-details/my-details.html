@@ -31,16 +31,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			   on-Error="onError">
 	</iron-ajax>
 
-    <div role="listbox">
+    <table>
       <template is="dom-repeat" items="{{details}}">
-		  <paper-item>
-			  <paper-item-body two-line>
-				  <div>{{item.amount}} {{item.msg}}</div>
-				  <div secondary>{{item.time}}</div>
-			  </paper-item-body>
-		  </paper-item>
+			  <tr>
+				  <td>{{item.time}}</td>
+				  <td>{{item.msg}}</td>
+				  <td>{{item.amount}}</td>
+			  </tr>
       </template>
-    </div>
+	</table>
   </template>
 
   <script>
