@@ -1,4 +1,4 @@
-<!--
+a<!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -32,10 +32,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</iron-ajax>
 
 				  <paper-input value="{{recipient}}"
-					           label="Empfänger"></paper-input>
+					           label="Empfänger" on-keydown="onKeydown"></paper-input>
 				  <paper-input value="{{amount}}"
 					           label="Betrag"
-				auto-validate allowed-pattern="[0-9.]"><div suffix>€</div></paper-input>
+				auto-validate allowed-pattern="[0-9.]" on-keydown="onKeydown"><div suffix>€</div></paper-input>
 				  <paper-button on-tap="doTransfer">Ok</paper-button>
   </template>
 
@@ -45,6 +45,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       Polymer({
         is: 'my-transfer',
+        onKeydown: function(e){
+          if (e.keyIdentifier==="Enter"){
+            this.doLogin();
+          }
+        },
 
         properties: {
           recipient: {
