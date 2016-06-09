@@ -33,6 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		       url="https://matom.at/api/{{app.username}}/user"
 		       headers$='{"pass":"[[password]]"}'
 		       method="PUT"
+			   content-type="application/json"
 		       on-response="doResponse"
 		       on-error="doError"
 			   handle-as="json"></iron-ajax>
@@ -63,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		},
 		doResponse: function(e){
 			this.fire('notbusy');
-			this.fire('message',{type:'success',text:"Benutzerdaten konnten nicht geändert werden"});
+			this.fire('message',{type:'success',text:"Benutzerdaten geändert"});
 		},
 		doError: function(e){
 			this.fire('notbusy');
