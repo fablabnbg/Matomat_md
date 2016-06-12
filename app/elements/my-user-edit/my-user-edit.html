@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'my-user-edit',
 
 		doSave: function(e){
-			let a=this.$.ajax;
+			var a=this.$.ajax;
 			if (this.password!=this.password2){
 				this.fire('message',{type:'fail',text:"Benutzerdaten konnten nicht geändert werden"});
 				return;

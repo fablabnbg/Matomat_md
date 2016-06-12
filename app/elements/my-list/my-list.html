@@ -63,8 +63,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 		doBuy: function(e){
 			this.fire('busy');
-			let a=this.$.ajaxbuy;
-			let item_id=e.currentTarget.dataset['itemid'];
+			var a=this.$.ajaxbuy;
+			var item_id=e.currentTarget.dataset['itemid'];
 			//This should be in the bindings of the declaration
 			a.url="https://matom.at/api/"+app.username+"/buy";
 			a.headers={pass:app.password};
@@ -73,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		},
 		doResponse: function(e){
 			this.items=this.$.ajaxitems.lastResponse;
-			for(let item of this.items){
+			for(var item of this.items){
 				item.price=item.price/100+"€";
 			}
 		},

@@ -73,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		},
 		doPay: function(amount){
 			this.fire('busy');
-			let a=this.$.ajaxpay;
+			var a=this.$.ajaxpay;
 			//This should be in the bindings of the declaration
 			a.url="https://matom.at/api/"+app.username+"/pay";
 			a.headers={pass:app.password};

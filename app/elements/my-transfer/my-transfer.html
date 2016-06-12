@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 		doTransfer: function(){
 			this.fire('busy');
-			let a=this.$.ajaxtransfer;
+			var a=this.$.ajaxtransfer;
 			//This should be in the bindings of the declaration
 			a.url="https://matom.at/api/"+app.username+"/transfer";
 			a.headers={pass:app.password};
