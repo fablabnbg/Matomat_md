@@ -41,6 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
 	  <paper-input value="{{customAmount}}"
 	               label="Betrag"
+				on-keydown="onKeydown"
 				auto-validate allowed-pattern="[0-9.-]"><div suffix>€</div></paper-input>
 	  <paper-button on-tap="doPayCustom">Ok</paper-button>
     </div>
@@ -88,6 +89,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		onPayFail: function(e){
 			this.fire('notbusy');
 			this.fire('message',{type:'fail',text:"Einzahlen nicht erfolgreich"});
+		},
+		onKeydown: function(e){
+			if (e.keyIdentifier==="Enter" ||
+			    e.key==="Enter"||
+			    e.which===13){
+				this.doPayCustom();
+			}
 		},
 
       });
