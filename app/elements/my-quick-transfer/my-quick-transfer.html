@@ -35,18 +35,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				  <div>Pizza</div>
 				  <div secondary>1.5€</div>
 			  </paper-item-body>
+		  </paper-item>
+		  <paper-item on-tap="doTransfer">
 			  <paper-item-body two-line>
 				  <div>Tschunk</div>
 				  <div secondary>2.0€</div>
 			  </paper-item-body>
 		  </paper-item>
-
-				  <paper-input value="{{recipient}}"
-					           label="Empfänger" on-keydown="onKeydown"></paper-input>
-				  <paper-input value="{{amount}}"
-					           label="Betrag"
-				auto-validate allowed-pattern="[0-9.]" on-keydown="onKeydown"><div suffix>€</div></paper-input>
-				  <paper-button on-tap="doTransfer">Ok</paper-button>
   </template>
 
   <script>
