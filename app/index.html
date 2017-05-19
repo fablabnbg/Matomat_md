@@ -154,6 +154,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				         on-notbusy="spinnerStop"
 				         on-message="showToast"></my-list>
               </paper-material>
+                <h2 class="page-title" tabindex="-1">Per Überweisung</h2>
+              <paper-material elevation="1">
+					<my-quick-transfer on-change="refreshBalance"
+					             on-busy="spinnerStart"
+					             on-notbusy="spinnerStop"
+					             on-message="showToast"></my-quick-transfer>
+              </paper-material>
             </section>
 
             <section data-route="bank" tabindex="-1">

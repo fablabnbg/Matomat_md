@@ -1,0 +1,104 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="my-quick-transfer">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+    </style>
+	<iron-ajax id="ajaxtransfer"
+	           url="https://matom.at/api/{{app.username}}/transfer"
+	           content-type="application/json"
+	           headers$='{"pass":"[[app.password]]"}'
+	           method="POST"
+	           on-response="onTransferSuccess"
+	           on-error="onTransferFail">
+	</iron-ajax>
+		  <paper-item on-tap="doTransfer">
+			  <paper-item-body two-line>
+				  <div>Pizza</div>
+				  <div secondary>1.5€</div>
+			  </paper-item-body>
+			  <paper-item-body two-line>
+				  <div>Tschunk</div>
+				  <div secondary>2.0€</div>
+			  </paper-item-body>
+		  </paper-item>
+
+				  <paper-input value="{{recipient}}"
+					           label="Empfänger" on-keydown="onKeydown"></paper-input>
+				  <paper-input value="{{amount}}"
+					           label="Betrag"
+				auto-validate allowed-pattern="[0-9.]" on-keydown="onKeydown"><div suffix>€</div></paper-input>
+				  <paper-button on-tap="doTransfer">Ok</paper-button>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+
+
+        onKeydown: function(e){
+    			if (e.keyIdentifier==="Enter" ||
+    			    e.key==="Enter"||
+    			    e.which===13){
+    				this.doTransfer();
+    			}
+    		},
+
+        properties: {
+          recipient: {
+            type: String,
+			value: "",
+            notify: true
+          },
+          amount: {
+            type: String,
+			value: "",
+            notify: true
+          }
+        },
+		doTransfer: function(e){
+			this.fire('busy');
+			var a=this.$.ajaxtransfer;
+			var target=e.currentTarget.getElementsByTagName("div");
+			var recipient=target[0].textContent;
+			var amount=parseFloat(target[1].textContent.slice(0,-1));
+			//This should be in the bindings of the declaration
+			a.url="https://matom.at/api/"+app.username+"/transfer";
+			a.headers={pass:app.password};
+			a.body={amount:amount*100,recipient:recipient};
+			a.generateRequest();
+		},
+		onTransferSuccess: function(e){
+			this.fire('notbusy');
+			this.fire('message',{type:'success',text:"Überweisen erfolgreich"});
+			this.fire('change')
+		},
+		onTransferFail: function(e){
+			this.fire('notbusy');
+			this.fire('message',{type:'fail',text:"Überweisen fehlgeschlagen"});
+		},
+
+      });
+    })();
+  </script>
+</dom-module>
